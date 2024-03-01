@@ -14,9 +14,14 @@ public class SwitchController : MonoBehaviour
     public Material offMaterial;
     public Material onMaterial;
     public ScoreManager scoreManager;
+    public VFXManager vfxManager;
+    
+    private AudioSource audioSource;
+
 
     private SwitchState state;
     private Renderer renderer;
+
 
   private void Start()
   {
@@ -24,13 +29,16 @@ public class SwitchController : MonoBehaviour
 
     Set(false);
     StartCoroutine(BlinkTimerStart(5));
+    audioSource = GetComponent<AudioSource>();
   }
   
    private void OnTriggerEnter(Collider other)
    {
     if (other == bola)
     {
+        vfxManager.PlaySwitchVFX(other.transform.position);
         Toggle();
+        audioSource.Play();
     }
 
     }
